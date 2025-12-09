@@ -1,0 +1,306 @@
+@import '~antd/dist/reset.css';
+
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-gradient: linear-gradient(45deg, #667eea, #764ba2);
+  --success-gradient: linear-gradient(45deg, #4CAF50, #45a049);
+  --danger-gradient: linear-gradient(45deg, #f44336, #da190b);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--primary-gradient);
+  color: #333;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.app-layout {
+  min-height: 100vh;
+  background: var(--primary-gradient);
+}
+
+.app-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-content {
+  flex-grow: 1;
+  background: transparent;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-content-wrapper {
+  margin-bottom: 8px;
+  width: 90%;
+  max-width: 1400px;
+}
+
+.user-content-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Header Styles */
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  background: var(--card-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+
+/* Card Styles */
+.app-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+.user-management-container {
+  max-width: 100%;
+}
+
+.app-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: var(--card-gradient);
+  border-radius: 2px;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* Button Styles */
+.gradient-btn {
+  background: var(--card-gradient);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  color: white;
+}
+
+.success-btn {
+  background: var(--success-gradient);
+  border: none;
+  color: white;
+}
+
+.success-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  color: white;
+}
+
+.danger-btn {
+  background: var(--danger-gradient);
+  border: none;
+  color: white;
+}
+
+.danger-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+  color: white;
+}
+
+/* Log Panel Styles */
+.log-container {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 8px;
+  height: 150px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.log-entry {
+  color: #00ff00;
+  margin-bottom: 5px;
+  padding: 2px 0;
+  animation: fadeIn 0.5s ease;
+}
+
+.log-entry.error {
+  color: #ff6b6b;
+}
+
+.log-entry.warning {
+  color: #ffa500;
+}
+
+.log-entry.info {
+  color: #00bfff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Status Bar */
+.status-bar {
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #333;
+}
+
+.status-value {
+  background: var(--card-gradient);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Platform Settings */
+.platform-settings {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .app-container {
+    padding: 5px;
+  }
+  
+  .platform-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+
+/* Ant Design Customizations */
+.ant-tabs .ant-tabs-tab {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  margin: 0 4px;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  background: var(--card-gradient);
+  color: white;
+}
+
+.ant-tabs .ant-tabs-tab:hover {
+  color: #667eea;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active:hover {
+  color: white;
+}
+
+.ant-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+.ant-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+
