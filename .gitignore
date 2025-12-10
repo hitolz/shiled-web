@@ -19,6 +19,7 @@ voice_data
 __debug**
 
 **/node_modules
+.next
 **/venv
 *.log
 package

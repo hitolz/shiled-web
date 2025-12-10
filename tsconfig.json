@@ -29,16 +29,7 @@
         "./src/*"
       ],
       "@api/*": [
-        "../common/api/*"
-      ],
-      "@utils/*": [
-        "../common/utils/*"
-      ],
-      "@model/*": [
-        "../common/model/*"
-      ],
-      "@enums/*": [
-        "../common/enums/*"
+        "./src/api/*"
       ]
     }
   },
@@ -50,6 +41,6 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "../common/**/*.ts"
-, "../client/src/utils/store/conf.ts"  ]
+    "./src/api/**/*.ts"
+ ]
 }

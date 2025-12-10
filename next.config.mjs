@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 import withAntdLess from 'next-plugin-antd-less';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const CORS_HEADERS = [
     { 
@@ -27,6 +32,23 @@ const nextConfig = {
       APP_URL_PREFIX : process.env.APP_URL_PREFIX
     },
     reactStrictMode: false,
+    webpack: (config) => {
+      // 配置路径别名，确保 Docker 构建时能正确解析
+      // 使用绝对路径确保在不同环境下都能正确解析
+      const projectRoot = path.resolve(__dirname);
+      const srcPath = path.resolve(projectRoot, 'src');
+      const apiPath = path.resolve(srcPath, 'api');
+      
+      // 配置别名：同时支持 @/ 和 @api/ 两种写法
+      // webpack 别名匹配是按最长匹配原则
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        '@': srcPath,           // 支持 @/api 和 @/xxx
+        '@api': apiPath,        // 支持 @api/xxx
+      };
+      
+      return config;
+    },
     async headers() {
         // 跨域配置
         return [

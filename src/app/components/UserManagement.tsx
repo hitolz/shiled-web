@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Form, message } from 'antd';
-import { UserApi, UserInfo, BusinessType } from '@/api';
+import { UserApi, UserInfo, BusinessType } from '@api/user/user.api';
 import UserSearchBar from './UserSearchBar';
 import UserStats from './UserStats';
 import UserTable from './UserTable';
