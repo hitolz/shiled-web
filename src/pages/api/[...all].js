@@ -8,7 +8,6 @@ dotenv.config({path: 'config/.env'});
 
 const prefix = "api";
 const target = process.env.NEXT_PUBLIC_API_BASE_URL;
-console.log('target', target);
 
 
 export default async function handler(req, res) {
