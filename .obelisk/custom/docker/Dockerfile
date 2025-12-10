@@ -1,4 +1,4 @@
-FROM dockerhub.test.wacai.info/xianglong/shield-web-cache:1.0
+FROM dockerhub.test.wacai.info/xianglong/shield-web-cache:2.0
 WORKDIR /app/program/shield-web
 COPY . .
 RUN ls -rtl
