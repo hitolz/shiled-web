@@ -25,3 +25,4 @@ __debug**
 package
 *.tar.gz
 !.obelisk.yml
+!.obelisk
