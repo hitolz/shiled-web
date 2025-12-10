@@ -1,16 +1,14 @@
 // pages/api/[...all].js
 import axios from "axios";
-import { constants } from "buffer";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { headers } from "next/headers";
-import formidable from 'formidable';
-import FormData from 'form-data';
-import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config({path: 'config/.env'});
 
 const prefix = "api";
 const target = process.env.NEXT_PUBLIC_API_BASE_URL;
+console.log('target', target);
 
 
 export default async function handler(req, res) {
