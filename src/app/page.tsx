@@ -6,6 +6,7 @@ import { SettingOutlined } from '@ant-design/icons';
 import enUS from 'antd/locale/en_US';
 import './globals.css';
 import UserManagement from './components/UserManagement';
+import { SystemApi } from '@api/system/system.api';
 
 const { Content } = Layout;
 
@@ -22,12 +23,12 @@ export default function Home() {
   const loadSettings = async (businessType?: BusinessType) => {
     try {
       setLoading(true);
-      const systemApi = (window as any).system;
+      const systemApi = (window as any)?.system ?? new SystemApi();
       const targetBusinessType = businessType !== undefined ? businessType : selectedBusinessType;
-      if (systemApi && targetBusinessType && systemApi.getSyncTimeConfigByBusiness) {
+      if (targetBusinessType && systemApi.getSyncTimeConfigByBusiness) {
         const config = await systemApi.getSyncTimeConfigByBusiness(targetBusinessType);
         form.setFieldsValue(config);
-      } else if (systemApi && systemApi.getSyncTimeConfig) {
+      } else if (systemApi.getSyncTimeConfig) {
         const config = await systemApi.getSyncTimeConfig();
         form.setFieldsValue(config);
       } else {
@@ -70,15 +71,17 @@ export default function Home() {
   const handleSaveSettings = async () => {
     try {
       const values = await form.validateFields();
-      const systemApi = (window as any).system;
-      if (systemApi && selectedBusinessType && systemApi.saveSyncTimeConfigByBusiness) {
+      const systemApi = (window as any)?.system ?? new SystemApi();
+      if (selectedBusinessType && systemApi.saveSyncTimeConfigByBusiness) {
         await systemApi.saveSyncTimeConfigByBusiness(selectedBusinessType, values);
         message.success(`System settings for ${selectedBusinessType} saved successfully`);
         closeSettingsModal();
-      } else if (systemApi && systemApi.saveSyncTimeConfig) {
+      } else if (systemApi.saveSyncTimeConfig) {
         await systemApi.saveSyncTimeConfig(values);
         message.success('System settings saved successfully');
         closeSettingsModal();
+      } else {
+        message.warning('System API not initialized');
       }
     } catch (error: any) {
       message.error(error.message || 'Failed to save system settings');
