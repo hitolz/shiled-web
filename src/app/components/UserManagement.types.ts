@@ -1,4 +1,4 @@
-export type BusinessType = 'adapundi' | 'singa' | 'KAT';
+export type BusinessType = 'adapundi' | 'SINGA' | 'KAT' | 'KLIKKAMI';
 
 /**
  * Sync statistics data structure
@@ -20,6 +20,6 @@ export interface UserInfo {
   password: string;
   remark: string;
   businessType?: BusinessType;
+  authCookie?: string;
   syncStats?: SyncStats; // Sync statistics
 }
-

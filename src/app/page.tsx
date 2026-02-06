@@ -10,7 +10,7 @@ import { SystemApi } from '@api/system/system.api';
 
 const { Content } = Layout;
 
-type BusinessType = 'adapundi' | 'SINGA' | 'KAT';
+type BusinessType = 'adapundi' | 'SINGA' | 'KAT' | 'KLIKKAMI';
 
 export default function Home() {
   const [activeTab] = useState<string>('user');
@@ -160,6 +160,7 @@ export default function Home() {
               <Select.Option value="adapundi">Adapundi</Select.Option>
               <Select.Option value="SINGA">SIGINT</Select.Option>
               <Select.Option value="KAT">KAT</Select.Option>
+              <Select.Option value="KLIKKAMI">Klik Kami</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item

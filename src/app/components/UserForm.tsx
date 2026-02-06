@@ -48,6 +48,7 @@ const UserForm: React.FC<UserFormProps> = ({ form, editingUser }) => {
           <Select.Option value="adapundi">Adapundi</Select.Option>
           <Select.Option value="SINGA">SIGINT</Select.Option>
           <Select.Option value="KAT">KAT</Select.Option>
+          <Select.Option value="KLIKKAMI">Klik Kami</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
@@ -59,9 +60,17 @@ const UserForm: React.FC<UserFormProps> = ({ form, editingUser }) => {
           rows={3}
         />
       </Form.Item>
+      <Form.Item
+        label="Auth Cookie"
+        name="authCookie"
+      >
+        <Input.TextArea
+          placeholder="Paste Admin-Token cookie, e.g. Admin-Token=..."
+          rows={2}
+        />
+      </Form.Item>
     </Form>
   );
 };
 
 export default UserForm;
-

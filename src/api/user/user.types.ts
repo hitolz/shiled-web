@@ -1,4 +1,4 @@
-export type BusinessType = 'adapundi' | 'SINGA' | 'KAT';
+export type BusinessType = 'adapundi' | 'SINGA' | 'KAT' | 'KLIKKAMI';
 
 /**
  * 同步统计数据结构
@@ -21,6 +21,6 @@ export interface UserInfo {
   password: string;
   remark: string;
   businessType?: BusinessType;
+  authCookie?: string;
   syncStats?: SyncStats; // 同步统计信息
 }
-
