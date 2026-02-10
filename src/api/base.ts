@@ -11,8 +11,10 @@ abstract class HttpApi {
 
   constructor() {
     this.apiName = this.getApiName();
+    // 前端部署在 Ingress 子路径 /shield-web 下，API 也需带上该前缀
+    const basePath = process.env.NEXT_PUBLIC_BASE_URL || '/shield-web';
     this.axiosInstance = axios.create({
-      baseURL: '/api',
+      baseURL: `${basePath}/api`,
       timeout: 60000,
       withCredentials: true,
       headers: {
@@ -118,4 +120,3 @@ abstract class HttpApi {
 }
 
 export { HttpApi };
-

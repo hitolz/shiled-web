@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config({path: 'config/.env'});
 
 const prefix = "api";
+const basePath = process.env.NEXT_PUBLIC_BASE_URL || '/shield-web';
 const target = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
@@ -69,6 +70,8 @@ async function request(url, req){
 }
 
 function getTargetUrl(url){
-  url = url.replace("/api",prefix)
-  return target  + url;
+  url = url.replace(`${basePath}/api`, prefix);
+  // 兼容未带 basePath 的旧请求
+  url = url.replace('/api', prefix);
+  return target + url;
 }
