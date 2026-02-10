@@ -26,6 +26,9 @@ const CORS_HEADERS = [
 ];
 
 const nextConfig = {
+    // 应用部署在 Ingress 的 /shield-web 路径下时，需要配置 basePath
+    // 这样访问 /shield-web 会映射到应用的根路径 /
+    basePath: '/shield-web',
     env: {
       JWT_SECRET : process.env.JWT_SECRET,
       SERVER_TARGET : process.env.SERVER_TARGET,
