@@ -1,25 +1,25 @@
 // pages/api/[...all].js
 import axios from "axios";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import path from 'path';
-import dotenv from 'dotenv';
-
-dotenv.config({path: 'config/.env'});
-
-const prefix = "api";
-const basePath = process.env.NEXT_PUBLIC_BASE_URL || '/shield-web';
-const target = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+import {
+  buildProxyTargetUrl,
+  getProxyRuntimeConfig,
+  rewriteApiPath,
+  sendMissingProxyTarget,
+} from "../../lib/proxyConfig";
 
 export default async function handler(req, res) {
+  const runtimeConfig = getProxyRuntimeConfig();
+  if (!runtimeConfig.target) {
+    return sendMissingProxyTarget(res, "api");
+  }
+
   // 创建代理中间件
   if(req.method == 'GET'){
     const proxy = createProxyMiddleware({
-      target: target, // 设置代理目标地址
+      target: runtimeConfig.target, // 设置代理目标地址
       changeOrigin: true, // 设置请求头中的 Host 为目标地址的 Host
-      pathRewrite: {
-        "^/api": prefix, // 将请求中的 /api 前缀替换为空字符串
-      },
+      pathRewrite: (path) => rewriteApiPath(path, runtimeConfig.basePath, runtimeConfig.prefix),
       headers: req.headers,
       onProxyReq: (proxyReq, req, res) => {
         // Add debug logs
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     return proxy(req, res);
   }
   try {
-    const url = getTargetUrl(req.url);
+    const url = getTargetUrl(req.url, runtimeConfig);
     console.log("request url is ", url);
     const response = await request(url, req)
     // 获取目标服务器的响应
@@ -69,9 +69,11 @@ async function request(url, req){
   return null;
 }
 
-function getTargetUrl(url){
-  url = url.replace(`${basePath}/api`, prefix);
-  // 兼容未带 basePath 的旧请求
-  url = url.replace('/api', prefix);
-  return target + url;
+function getTargetUrl(url, runtimeConfig){
+  return buildProxyTargetUrl(
+    runtimeConfig.target,
+    url,
+    runtimeConfig.basePath,
+    runtimeConfig.prefix
+  );
 }

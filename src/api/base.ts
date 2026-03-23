@@ -1,6 +1,31 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { plainToInstance } from 'class-transformer';
 
+function normalizeBasePath(basePath?: string): string {
+  const fallback = '/shield-web';
+  if (!basePath) {
+    return fallback;
+  }
+
+  let normalized = basePath.trim();
+  if (!normalized) {
+    return fallback;
+  }
+
+  try {
+    normalized = new URL(normalized).pathname || '';
+  } catch {
+    // Keep relative paths such as /shield-web.
+  }
+
+  normalized = normalized.replace(/\/+$/, '');
+  if (!normalized || normalized === '/') {
+    return fallback;
+  }
+
+  return normalized.startsWith('/') ? normalized : `/${normalized}`;
+}
+
 /**
  * HTTP API 基类
  * 用于替代 Electron IPC 通信，使用 HTTP 请求
@@ -12,7 +37,7 @@ abstract class HttpApi {
   constructor() {
     this.apiName = this.getApiName();
     // 前端部署在 Ingress 子路径 /shield-web 下，API 也需带上该前缀
-    const basePath = process.env.NEXT_PUBLIC_BASE_URL || '/shield-web';
+    const basePath = normalizeBasePath(process.env.NEXT_PUBLIC_BASE_URL);
     this.axiosInstance = axios.create({
       baseURL: `${basePath}/api`,
       timeout: 60000,

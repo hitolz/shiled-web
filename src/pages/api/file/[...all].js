@@ -1,16 +1,15 @@
 // pages/api/[...all].js
 import axios from "axios";
-import { constants } from "buffer";
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { headers } from "next/headers";
 import formidable from 'formidable';
 import FormData from 'form-data';
 import fs from 'fs';
-
-require('dotenv').config();
-
-const prefix = process.env.APP_URL_PREFIX;
-const target = process.env.SERVER_TARGET;
+import {
+  buildFileProxyTargetUrl,
+  getProxyRuntimeConfig,
+  rewriteFileApiPath,
+  sendMissingProxyTarget,
+} from "../../../lib/proxyConfig";
 
 // Next.js API 路由处理函数
 
@@ -22,14 +21,17 @@ export const config = {
 }
 
 export default async function handler(req, res) {
+  const runtimeConfig = getProxyRuntimeConfig();
+  if (!runtimeConfig.target) {
+    return sendMissingProxyTarget(res, "file");
+  }
+
   // 创建代理中间件
   if(req.method == 'GET'){
     const proxy = createProxyMiddleware({
-      target: target, // 设置代理目标地址
+      target: runtimeConfig.target, // 设置代理目标地址
       changeOrigin: true, // 设置请求头中的 Host 为目标地址的 Host
-      pathRewrite: {
-        "^/api": prefix, // 将请求中的 /api 前缀替换为空字符串
-      },
+      pathRewrite: (path) => rewriteFileApiPath(path, runtimeConfig.basePath, runtimeConfig.prefix),
       headers: req.headers,
       onProxyReq: (proxyReq, req, res) => {
         // Add debug logs
@@ -48,7 +50,7 @@ export default async function handler(req, res) {
     return proxy(req, res);
   }
   try {
-    const url = getTargetUrl(req.url);
+    const url = getTargetUrl(req.url, runtimeConfig);
     const response = await request(url, req)
     // 获取目标服务器的响应
     const data = response.data;
@@ -105,7 +107,6 @@ async function request(url, req){
       const mergedHeaders = { ...headers, ...formHeaders };
       // 去掉 content-length，form-data 会自动处理
       delete mergedHeaders['content-length'];
-      url = url.replace("/file", "")
       // 发送
       const response = await axios.post(url, formData, { headers: mergedHeaders });
       return response;
@@ -124,7 +125,11 @@ async function request(url, req){
   return null;
 }
 
-function getTargetUrl(url){
-  url = url.replace("/api",prefix)
-  return target  + url;
+function getTargetUrl(url, runtimeConfig){
+  return buildFileProxyTargetUrl(
+    runtimeConfig.target,
+    url,
+    runtimeConfig.basePath,
+    runtimeConfig.prefix
+  );
 }
