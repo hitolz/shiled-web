@@ -140,3 +140,38 @@ export function sendMissingProxyTarget(res, routeName) {
       "请在 shield-web/config/.env 中设置 SERVER_TARGET 或 NEXT_PUBLIC_API_BASE_URL。",
   });
 }
+
+const HOP_BY_HOP_HEADERS = new Set([
+  "host",
+  "connection",
+  "content-length",
+  "transfer-encoding",
+]);
+
+export function buildForwardHeaders(headers = {}, overrides = {}) {
+  const nextHeaders = {};
+
+  for (const [key, value] of Object.entries(headers)) {
+    if (value == null) {
+      continue;
+    }
+
+    const normalizedKey = key.toLowerCase();
+    if (HOP_BY_HOP_HEADERS.has(normalizedKey)) {
+      continue;
+    }
+
+    nextHeaders[key] = value;
+  }
+
+  for (const [key, value] of Object.entries(overrides)) {
+    if (value == null || value === "") {
+      delete nextHeaders[key];
+      continue;
+    }
+
+    nextHeaders[key] = value;
+  }
+
+  return nextHeaders;
+}
