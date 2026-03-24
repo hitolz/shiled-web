@@ -152,15 +152,10 @@ export default function Home() {
             name="businessType"
           >
             <Select
-              placeholder="Select business type (optional)"
               value={selectedBusinessType}
               onChange={handleBusinessTypeChange}
-              allowClear
             >
-              <Select.Option value="adapundi">Adapundi</Select.Option>
-              <Select.Option value="SINGA">SIGINT</Select.Option>
-              <Select.Option value="KAT">KAT</Select.Option>
-              <Select.Option value="KLIKKAMI">Klik Kami</Select.Option>
+              <Select.Option value="SINGA">SININT</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item

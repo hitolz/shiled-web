@@ -15,7 +15,7 @@ const UserManagement: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UserInfo | null>(null);
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedBusinessType, setSelectedBusinessType] = useState<BusinessType>('adapundi'); // 默认选择第一个
+  const [selectedBusinessType, setSelectedBusinessType] = useState<BusinessType>('SINGA'); // 默认选择 SININT
   const [enableDeduplication, setEnableDeduplication] = useState<boolean>(true); // 默认选中
   const [enableResume, setEnableResume] = useState<boolean>(false); // 默认不选中
   const [runningUsers, setRunningUsers] = useState<Set<string>>(new Set());

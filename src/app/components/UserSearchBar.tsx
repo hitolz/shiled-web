@@ -33,15 +33,11 @@ const UserSearchBar: React.FC<UserSearchBarProps> = ({
   return (
     <div style={{ marginBottom: 16, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
       <Select
-        placeholder="Select business type"
         value={selectedBusinessType}
         onChange={onBusinessTypeChange}
         style={{ width: 180 }}
       >
-        <Select.Option value="adapundi">Adapundi</Select.Option>
         <Select.Option value="SINGA">SINGA</Select.Option>
-        <Select.Option value="KAT">KAT</Select.Option>
-        <Select.Option value="KLIKKAMI">Klik Kami</Select.Option>
       </Select>
       <Input
         placeholder="Search by username or remark"
