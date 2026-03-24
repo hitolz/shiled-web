@@ -37,7 +37,7 @@ const UserSearchBar: React.FC<UserSearchBarProps> = ({
         onChange={onBusinessTypeChange}
         style={{ width: 180 }}
       >
-        <Select.Option value="SINGA">SINGA</Select.Option>
+        <Select.Option value="SINGA">SININT</Select.Option>
       </Select>
       <Input
         placeholder="Search by username or remark"

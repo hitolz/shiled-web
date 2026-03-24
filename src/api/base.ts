@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { plainToInstance } from 'class-transformer';
 
 function normalizeBasePath(basePath?: string): string {
-  const fallback = '/shield-web';
+  const fallback = '/singa';
   if (!basePath) {
     return fallback;
   }

@@ -43,7 +43,7 @@ function readEnv(name) {
 }
 
 function normalizeBasePath(basePath) {
-  const fallback = "/shield-web";
+  const fallback = "/singa";
   let normalized = normalizeEnvValue(basePath);
 
   if (!normalized) {
