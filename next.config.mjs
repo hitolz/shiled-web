@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function normalizeBasePath(basePath) {
-    const fallback = '/shield-web';
+    const fallback = '/singa';
     const rawValue = typeof basePath === 'string' ? basePath.trim() : '';
 
     if (!rawValue) {
