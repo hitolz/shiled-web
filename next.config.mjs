@@ -6,6 +6,29 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+function normalizeBasePath(basePath) {
+    const fallback = '/shield-web';
+    const rawValue = typeof basePath === 'string' ? basePath.trim() : '';
+
+    if (!rawValue) {
+      return fallback;
+    }
+
+    let normalized = rawValue;
+    try {
+      normalized = new URL(rawValue).pathname || '';
+    } catch {
+      // Keep relative paths such as /shield-web or /singa.
+    }
+
+    normalized = normalized.replace(/\/+$/, '');
+    if (!normalized || normalized === '/') {
+      return fallback;
+    }
+
+    return normalized.startsWith('/') ? normalized : `/${normalized}`;
+}
+
 const CORS_HEADERS = [
     { 
       key: "Access-Control-Allow-Credentials", 
@@ -26,9 +49,8 @@ const CORS_HEADERS = [
 ];
 
 const nextConfig = {
-    // 应用部署在 Ingress 的 /shield-web 路径下时，需要配置 basePath
-    // 这样访问 /shield-web 会映射到应用的根路径 /
-    basePath: '/shield-web',
+    // 通过 NEXT_PUBLIC_BASE_URL 配置 Ingress 子路径，未配置时默认 /shield-web
+    basePath: normalizeBasePath(process.env.NEXT_PUBLIC_BASE_URL),
     env: {
       JWT_SECRET : process.env.JWT_SECRET,
       SERVER_TARGET : process.env.SERVER_TARGET,
