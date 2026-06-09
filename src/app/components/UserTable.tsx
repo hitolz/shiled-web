@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Table, Button, Popconfirm, Space, Progress, Typography, Tag, Tooltip, Dropdown, Spin } from 'antd';
-import { EditOutlined, DeleteOutlined, PlayCircleOutlined, StopOutlined, MoreOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlayCircleOutlined, StopOutlined, MoreOutlined, ClearOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import type { MenuProps } from 'antd';
 import { UserInfo, BusinessType, SyncStats } from '@/api';
@@ -17,6 +17,7 @@ interface UserTableProps {
   onDelete: (username: string) => void;
   onRun: (username: string) => void;
   onStop: (username: string) => void;
+  onClearLogin: (username: string) => void;
 }
 
 const UserTable: React.FC<UserTableProps> = ({
@@ -27,6 +28,7 @@ const UserTable: React.FC<UserTableProps> = ({
   onDelete,
   onRun,
   onStop,
+  onClearLogin,
 }) => {
   // 管理展开的行
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
@@ -74,7 +76,7 @@ const UserTable: React.FC<UserTableProps> = ({
     {
       title: 'Action',
       key: 'action',
-      width: 160,
+      width: 180,
       align: 'center',
       fixed: 'right' as const,
       render: (_, record) => {
@@ -130,6 +132,23 @@ const UserTable: React.FC<UserTableProps> = ({
               </span>
             ),
             disabled: !isRunning,
+          },
+          {
+            key: 'clearLogin',
+            label: (
+              <Popconfirm
+                title="Clear login info for this user?"
+                onConfirm={() => onClearLogin(record.username)}
+                okText="Confirm"
+                cancelText="Cancel"
+                onCancel={(e) => e?.stopPropagation()}
+              >
+                <span style={{ cursor: 'pointer' }}>
+                  <ClearOutlined style={{ marginRight: 8 }} />
+                  Clear Login
+                </span>
+              </Popconfirm>
+            ),
           },
           {
             type: 'divider',
@@ -208,6 +227,21 @@ const UserTable: React.FC<UserTableProps> = ({
                   disabled={!isRunning}
                 />
               </Tooltip>
+              <Popconfirm
+                title="Clear login info for this user?"
+                onConfirm={() => onClearLogin(record.username)}
+                okText="Confirm"
+                cancelText="Cancel"
+              >
+                <Tooltip title="Clear login">
+                  <Button
+                    type="link"
+                    icon={<ClearOutlined />}
+                    size="small"
+                    style={{ padding: '0 2px', minWidth: 'auto' }}
+                  />
+                </Tooltip>
+              </Popconfirm>
               <Popconfirm
                 title="Are you sure you want to delete this user?"
                 onConfirm={() => onDelete(record.username)}
@@ -407,4 +441,3 @@ const UserTable: React.FC<UserTableProps> = ({
 };
 
 export default UserTable;
-

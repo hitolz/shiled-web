@@ -144,6 +144,17 @@ const UserManagement: React.FC = () => {
     }
   };
 
+  // Clear user login state
+  const handleClearLogin = async (username: string) => {
+    try {
+      await userApi.clearUserLogin(username);
+      message.success(`User ${username} login info cleared`);
+      loadUsers();
+    } catch (error: any) {
+      message.error('Failed to clear login info: ' + error.message);
+    }
+  };
+
   return (
     <div className="app-card user-management-container">
       <div className="card-title">User Management</div>
@@ -171,6 +182,7 @@ const UserManagement: React.FC = () => {
         onDelete={handleDelete}
         onRun={handleRun}
         onStop={handleStop}
+        onClearLogin={handleClearLogin}
       />
       <UserModal
         open={isModalOpen}

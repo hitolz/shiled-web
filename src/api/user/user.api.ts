@@ -65,5 +65,11 @@ export class UserApi extends HttpApi {
   async stopUser(username: string): Promise<void> {
     return this.post<void>('stopUser', { username });
   }
-}
 
+  /**
+   * 清理用户登录信息
+   */
+  async clearUserLogin(username: string): Promise<void> {
+    return this.post<void>('clearUserLogin', { username });
+  }
+}
