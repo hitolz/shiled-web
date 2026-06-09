@@ -34,7 +34,6 @@ const UserForm: React.FC<UserFormProps> = ({ form, editingUser }) => {
         name="password"
         rules={[
           { required: true, message: 'Please enter password' },
-          { min: 6, message: 'Password must be at least 6 characters' },
         ]}
       >
         <Input.Password placeholder="Enter password" />
