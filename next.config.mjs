@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function normalizeBasePath(basePath) {
-    const fallback = '/singa';
+    const fallback = '/uku';
     const rawValue = typeof basePath === 'string' ? basePath.trim() : '';
 
     if (!rawValue) {
@@ -18,7 +18,7 @@ function normalizeBasePath(basePath) {
     try {
       normalized = new URL(rawValue).pathname || '';
     } catch {
-      // Keep relative paths such as /shield-web or /singa.
+      // Keep relative paths such as /shield-web or /uku.
     }
 
     normalized = normalized.replace(/\/+$/, '');

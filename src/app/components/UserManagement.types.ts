@@ -1,4 +1,4 @@
-export type BusinessType = 'adapundi' | 'SINGA' | 'KAT' | 'KLIKKAMI';
+export type BusinessType = 'uku';
 
 /**
  * Sync statistics data structure

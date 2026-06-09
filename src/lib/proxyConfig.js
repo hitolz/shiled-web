@@ -43,7 +43,7 @@ function readEnv(name) {
 }
 
 function normalizeBasePath(basePath) {
-  const fallback = "/singa";
+  const fallback = "/uku";
   let normalized = normalizeEnvValue(basePath);
 
   if (!normalized) {

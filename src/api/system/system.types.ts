@@ -5,6 +5,5 @@ export interface SyncTimeConfig {
   hour: number; // Hour (0-23)
   minute: number; // Minute (0-59)
   day?: number; // Day of month (1-31, only used when type is monthly)
-  businessType?: BusinessType; // Business type (adapundi or singa)
+  businessType?: BusinessType; // Business type (uku)
 }
-

@@ -10,7 +10,7 @@ import { SystemApi } from '@api/system/system.api';
 
 const { Content } = Layout;
 
-type BusinessType = 'adapundi' | 'SINGA' | 'KAT' | 'KLIKKAMI';
+type BusinessType = 'uku';
 
 export default function Home() {
   const [activeTab] = useState<string>('user');
@@ -155,7 +155,7 @@ export default function Home() {
               value={selectedBusinessType}
               onChange={handleBusinessTypeChange}
             >
-              <Select.Option value="SINGA">SININT</Select.Option>
+              <Select.Option value="uku">UKU</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item

@@ -45,10 +45,7 @@ const UserForm: React.FC<UserFormProps> = ({ form, editingUser }) => {
         rules={[{ required: true, message: 'Please select business type' }]}
       >
         <Select placeholder="Select business type">
-          <Select.Option value="adapundi">Adapundi</Select.Option>
-          <Select.Option value="SINGA">SIGINT</Select.Option>
-          <Select.Option value="KAT">KAT</Select.Option>
-          <Select.Option value="KLIKKAMI">Klik Kami</Select.Option>
+          <Select.Option value="uku">UKU</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
@@ -65,7 +62,7 @@ const UserForm: React.FC<UserFormProps> = ({ form, editingUser }) => {
         name="authCookie"
       >
         <Input.TextArea
-          placeholder="Paste Admin-Token cookie, e.g. Admin-Token=..."
+          placeholder="Paste UKU auth cookie"
           rows={2}
         />
       </Form.Item>

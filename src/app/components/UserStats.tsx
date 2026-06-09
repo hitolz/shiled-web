@@ -91,13 +91,7 @@ const UserStats: React.FC<UserStatsProps> = ({ users, businessType }) => {
       bodyStyle={{ padding: '16px 24px' }}
     >
       <div style={{ color: 'white', marginBottom: 12, fontSize: 16, fontWeight: 500 }}>
-        {businessType === 'adapundi'
-          ? 'Adapundi'
-          : businessType === 'KAT'
-            ? 'KAT'
-            : businessType === 'KLIKKAMI'
-              ? 'Klik Kami'
-              : 'SINGA'} Statistics
+        {businessType === 'uku' ? 'UKU' : businessType} Statistics
       </div>
       <Row gutter={16}>
         <Col xs={24} sm={12} md={8} lg={4}>
