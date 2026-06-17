@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Layout, ConfigProvider, Button, Modal, Form, Radio, InputNumber, message, Space, Select } from 'antd';
+import { Layout, ConfigProvider, Button, Modal, Form, Radio, InputNumber, message, Space, Select, Switch } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import enUS from 'antd/locale/en_US';
 import './globals.css';
@@ -16,6 +16,7 @@ export default function Home() {
   const [activeTab] = useState<string>('user');
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [skipSyncedCases, setSkipSyncedCases] = useState(false);
   const [selectedBusinessType, setSelectedBusinessType] = useState<BusinessType | undefined>(undefined);
   const [form] = Form.useForm();
 
@@ -33,6 +34,11 @@ export default function Home() {
         form.setFieldsValue(config);
       } else {
         message.warning('System API not initialized');
+      }
+      // 加载 skipSyncedCases 配置（需要选定业务类型）
+      if (targetBusinessType && systemApi.getSkipSyncedCases) {
+        const skipValue = await systemApi.getSkipSyncedCases(targetBusinessType);
+        setSkipSyncedCases(!!skipValue);
       }
     } catch (error: any) {
       message.error('Failed to load system settings: ' + error.message);
@@ -65,6 +71,7 @@ export default function Home() {
     setIsSettingsModalOpen(false);
     form.resetFields();
     setSelectedBusinessType(undefined);
+    setSkipSyncedCases(false);
   };
 
   // Save system settings
@@ -82,6 +89,10 @@ export default function Home() {
         closeSettingsModal();
       } else {
         message.warning('System API not initialized');
+      }
+      // 保存 skipSyncedCases 配置（需要选定业务类型）
+      if (selectedBusinessType && systemApi.setSkipSyncedCases) {
+        await systemApi.setSkipSyncedCases(selectedBusinessType, skipSyncedCases);
       }
     } catch (error: any) {
       message.error(error.message || 'Failed to save system settings');
@@ -228,6 +239,20 @@ export default function Home() {
               />
             </Form.Item>
           </Space>
+
+          {selectedBusinessType && (
+            <Form.Item
+              label="Skip Synced Cases"
+              tooltip="When enabled, the scheduled task will skip cases already synced today. When disabled, all cases are synced from scratch."
+            >
+              <Switch
+                checked={skipSyncedCases}
+                onChange={(checked) => setSkipSyncedCases(checked)}
+                checkedChildren="ON"
+                unCheckedChildren="OFF"
+              />
+            </Form.Item>
+          )}
         </Form>
       </Modal>
     </ConfigProvider>

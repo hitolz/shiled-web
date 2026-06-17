@@ -43,5 +43,19 @@ export class SystemApi extends HttpApi {
       config,
     });
   }
+
+  /**
+   * 获取是否跳过今日已同步案件
+   */
+  async getSkipSyncedCases(businessType: BusinessType): Promise<boolean> {
+    return this.get<boolean>('getSkipSyncedCases', { businessType });
+  }
+
+  /**
+   * 设置是否跳过今日已同步案件
+   */
+  async setSkipSyncedCases(businessType: BusinessType, value: boolean): Promise<void> {
+    return this.post<void>('setSkipSyncedCases', { businessType, value });
+  }
 }
 
